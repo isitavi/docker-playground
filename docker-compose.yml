@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  node-project-01:
+    depends_on:
+      - node-project-db
+    build:
+      context: ./node-project-01
+    command: ["/wait-for-it.sh", "node-project-db:8002", "--", "npm", "start"]
+    ports:
+      - "8000:3000"
+    environment:
+      - test=testvalue
+      - DATABASE_PASSWORD=complexpassword
+      - DATABASE_HOST=node-project-db
+    volumes:
+      - type: bind
+        source: ./node-project-01
+        target: /app
+    networks:
+      - app_db_network
+
+  node-project-db:
+    image: mysql:8.0.23
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - "MYSQL_ROOT_PASSWORD=complexpassword"
+      - "MYSQL_DATABASE=Products"
+    ports:
+      - 8002:3306
+    networks:
+      - app_db_network
+
+  inventory_service:
+    build:
+      context: ./node-project-02
+    ports:
+      - "8001:3000"
+    volumes:
+      - my-volume:/var/lib/data
+
+volumes:
+  my-volume:
+
+networks:
+  app_db_network:
