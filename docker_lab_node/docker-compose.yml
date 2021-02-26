@@ -20,7 +20,8 @@ services:
       - app_db_network
 
   node-project-db:
-    image: mysql:latest
+    build:
+      context: ./node_project_db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
