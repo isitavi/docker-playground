@@ -1,1 +1,2 @@
 # docker-playground
+This is about Docker Volumes and how we can use volumes to persist data but also how we can turn our development environment into a Volume and make our development experience considerably better. how to deal with Databases, putting them into containers and how to make containers talk to other containers using legacy linking but also the new standard through networks. this is how we manage more than one service using Docker Compose. Docker Compose where found Volumes, Environment Variables and working with Databases and Networks
